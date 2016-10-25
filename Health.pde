@@ -1,3 +1,4 @@
+int eaten = 1;
 void hunger() { //Could use optimization. Good for now. 
     rectMode(CENTER);
     noFill();
@@ -8,7 +9,7 @@ void hunger() { //Could use optimization. Good for now.
     fill(red, green, blue);
     rect(-transX + width/2-299, -transY + 13, health, 24);
     rectMode(CENTER);
-    health -= .05;
+    health -= .1/eaten;
     if (health < 0) {
         health = 0;
         dead = true;

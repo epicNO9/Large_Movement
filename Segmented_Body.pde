@@ -9,13 +9,14 @@ class Segment {
     float [] blahX = new float [6];
     float [] blahY = new float [6];
     void followHead() {
-        rect(Seg0.position.x, Seg0.position.y, 10, 10);
-        Seg0.velocity.x = blahX[0];
-        Seg0.velocity.y = blahY[0];
+
         Seg0.position.add(Seg0.velocity);
-        blahX[5] = -Camera0.velocity.x;
-        blahY[5] = -Camera0.velocity.y;
-        spacing();
+        Seg0.velocity.x = (Seg0.position.x - Camera0.position.x-width/2)/1000;
+        Seg0.velocity.y = (Camera0.position.y-diffY)/1000 ;
+        println(Seg0.velocity.x);
+        println(Seg0.velocity.y);
+       
+        rect(Seg0.position.x, Seg0.position.y, 10, 10);
     }
     void follow1() {
         rect(Seg1.position.x, Seg1.position.y, 10, 10);
@@ -52,4 +53,4 @@ class Segment {
         else
             i = 0;
     }
-}
+} 
