@@ -1,5 +1,5 @@
 Camera Camera0;
-PImage head_image;
+PImage[] head_image = new PImage[5];
 Star star1, star2, star3, star4, star5, star6;
 boolean stopper;
 float transX, transY, diffX, diffY;
@@ -16,7 +16,10 @@ void setup() {
     //fullScreen();
     frameRate(60);
     imageMode(CENTER);
-    head_image = loadImage("Head_Sprite.png");
+    for (int i = 1; i < 5; i++) {
+        String imageName = "frame" + i + ".gif";
+        head_image[i] = loadImage(imageName);
+    }
     star1 = new Star(width+100, height/2, #FFA000, "10 Trillion", false, false, ""); 
     star2 = new Star(width+100, -200, #FFC000, "Zero", false, true, "Uhh, this star has a poopy butthole"); 
     star3 = new Star(-200, height+100, #FFB000, "327", false, true, "");
@@ -71,7 +74,7 @@ void draw() {
         rotate(headAngle-PI/2);
         if (dead)
             tint(0, 125, 255);
-        image(head_image, 0, 0, 100, 100);
+        playerAnimation();
         popMatrix();
 
         //Seg0.followHead();
@@ -163,7 +166,8 @@ class Star {
                     translate(-Camera0.position.x+width/2, -Camera0.position.y+height/2);
                     //scale(scaler);
                     rotate(radians(theta));
-                    image(head_image, 150, 0, 100, 100); // if you want to scale it by .25, multiply the xPos.
+                    playerAnimation();
+                    //image(head_image[0], 150, 0, 100, 100); // if you want to scale it by .25, multiply the xPos.
                     //if(scaler >= .25) 
                     //	scaler -= .05;
                     popMatrix();
