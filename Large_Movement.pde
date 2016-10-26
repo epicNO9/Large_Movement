@@ -72,8 +72,6 @@ void draw() {
         pushMatrix();
         translate(-Camera0.position.x + width/2, -Camera0.position.y + height/2);
         rotate(headAngle-PI/2);
-        if (dead)
-            tint(0, 125, 255);
         playerAnimation();
         popMatrix();
 
@@ -149,12 +147,14 @@ class Star {
             noStroke();
             if (zoom) {
                 if (isZoomed) {
-                    fill(c, random(20, 30));
-                    ellipse(xPos, yPos, xSize+45, ySize+45);
-                    fill(c, random(60, 70));
-                    ellipse(xPos, yPos, xSize+25, ySize+25);
-                    fill(c, random(90, 100));
-                    ellipse(xPos, yPos, xSize+10, ySize+10);
+                    if (!isBlackHole) {
+                        fill(c, random(20, 30));
+                        ellipse(xPos, yPos, xSize+45, ySize+45);
+                        fill(c, random(60, 70));
+                        ellipse(xPos, yPos, xSize+25, ySize+25);
+                        fill(c, random(90, 100));
+                        ellipse(xPos, yPos, xSize+10, ySize+10);
+                    }
                     fill(c);
                     ellipse(xPos, yPos, xSize, ySize);
 
@@ -181,7 +181,7 @@ class Star {
                     } else {
                         full = true;
                     }
-                    if (mouseX >  width/2 + 200 && mouseX <  width/2 + 290 && mouseY > height/2-50-10 && mouseY < height/2-50+10 && full) {
+                    if (mouseX >  width/2 + 200 && mouseX <  width/2 + 290 && mouseY > height/2-50-10 && mouseY < height/2-50+10 && full && !dead) {
                         noFill();
                         stroke(255);
                         rect(xPos+250, yPos-55, 70, 30);
@@ -194,13 +194,13 @@ class Star {
                             isEaten = true;
                             scaler = 1;
                             if (!isBlackHole) {
-                                eaten++;
+                                eaten-= .01;
                             } else {
-                                eaten--;
+                                eaten+= .02;
                             }
                         }
                     }
-                    if (mouseX >  width/2 + 200 && mouseX <  width/2 + 290 && mouseY > height/2+50-10 && mouseY < height/2+50+10 && full) {
+                    if (mouseX >  width/2 + 200 && mouseX <  width/2 + 290 && mouseY > height/2+50-10 && mouseY < height/2+50+10 && full && !dead) {
                         noFill();
                         stroke(255);
                         rect(xPos+250, yPos+45, 40, 30);
@@ -218,13 +218,14 @@ class Star {
                 }
             } else {
 
-
-                fill(c, random(20, 30));
-                ellipse(xPos, yPos, xSize+45/4, ySize+45/4);
-                fill(c, random(60, 70));
-                ellipse(xPos, yPos, xSize+25/4, ySize+25/4);
-                fill(c, random(90, 100));
-                ellipse(xPos, yPos, xSize+2.5, ySize+2.5);
+                if (!isBlackHole) {
+                    fill(c, random(20, 30));
+                    ellipse(xPos, yPos, xSize+45/4, ySize+45/4);
+                    fill(c, random(60, 70));
+                    ellipse(xPos, yPos, xSize+25/4, ySize+25/4);
+                    fill(c, random(90, 100));
+                    ellipse(xPos, yPos, xSize+2.5, ySize+2.5);
+                }
                 fill(c);
                 ellipse(xPos, yPos, xSize, ySize);
             }

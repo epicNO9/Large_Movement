@@ -2,7 +2,7 @@ System cis, cis2, cis3, cis4, cis5;
 class System {
     ArrayList<Particle> particles;
     PVector origin;
-	color c;
+    color c;
     System(PVector position, color tempColor) {
         c = tempColor;
         origin = position.copy();
@@ -51,14 +51,24 @@ class Particle {
 }
 
 void runParticles() {
-    cis.addParticle();
-    cis.run();
-    cis2.addParticle();
-    cis2.run();
-    cis3.addParticle();
-    cis3.run();
-    cis4.addParticle();
-    cis4.run();
-    cis5.addParticle();
-    cis5.run();
+    if (!star1.isEaten) {
+        cis.addParticle();
+        cis.run();
+    }
+    if (!star2.isEaten) {
+        cis2.addParticle();
+        cis2.run();
+    }
+    if (!star3.isEaten) {
+        cis3.addParticle();
+        cis3.run();
+    }
+    if (!star4.isEaten) {
+        cis4.addParticle();
+        cis4.run();
+    }
+    //if (!star5.isEaten) {
+    //    cis5.addParticle();
+    //    cis5.run();
+    //}
 }
