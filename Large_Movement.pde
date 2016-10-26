@@ -10,6 +10,7 @@ float theta;
 float zoomXPos, zoomYPos;
 boolean changerStopper;
 float headAngle = PI/2;
+float scaler = 1; 
 void setup() {
     size(720, 480);
     //fullScreen();
@@ -38,6 +39,11 @@ void setup() {
     Tail = new Segment();
     Tail.position = new PVector(-Camera0.position.x + width/2, -Camera0.position.y + height/2);
     Tail.velocity = new PVector(0, 0);
+    cis = new System(new PVector(width+100, height/2), #FFA000);
+    cis2 = new System(new PVector(width+100, -200), #FFC000);
+    cis3 = new System(new PVector(-200, height+100), #FFB000);
+    cis4 = new System(new PVector(-1000, -150), #AFCFFF);
+    cis5 = new System(new PVector(width+400, height+200), #C000FF);
 }
 void draw() {
     background(0);
@@ -48,6 +54,7 @@ void draw() {
     transX = Camera0.position.x;
     transY = Camera0.position.y;
     //bgStars();
+    runParticles();
     star1.create();
     star2.create();
     star3.create();
@@ -62,9 +69,9 @@ void draw() {
         pushMatrix();
         translate(-Camera0.position.x + width/2, -Camera0.position.y + height/2);
         rotate(headAngle-PI/2);
-        if(dead)
-        	tint(0, 125, 255);
-        image(head_image, 0 , 0, 100, 100);
+        if (dead)
+            tint(0, 125, 255);
+        image(head_image, 0, 0, 100, 100);
         popMatrix();
 
         //Seg0.followHead();
@@ -73,8 +80,6 @@ void draw() {
         //Tail.follow3();
     }
     Camera0.moveCamera();
-
-    
 }
 
 void mousePressed() {
@@ -97,11 +102,6 @@ class Camera {
             Camera0.velocity.y = -diffY/100;
             headAngle = atan2(mouseY - height/2, mouseX - width/2);
             Seg0.blahY[5] = -Camera0.velocity.y;
-        }
-        if (zoom) {
-            //theta++;
-            //Camera0.position.x = cos(degrees(theta))*100;
-            //Camera0.position.y = sin(degrees(theta))*100;
         }
         Camera0.position.add(Camera0.velocity);
     }
@@ -143,19 +143,31 @@ class Star {
             text("Consume", xPos+ 250, yPos-50);
             text("Exit", xPos+ 250, yPos+50);
             fill(c);
-            stroke(0);
+            noStroke();
             if (zoom) {
                 if (isZoomed) {
+                    fill(c, random(20, 30));
+                    ellipse(xPos, yPos, xSize+45, ySize+45);
+                    fill(c, random(60, 70));
+                    ellipse(xPos, yPos, xSize+25, ySize+25);
+                    fill(c, random(90, 100));
+                    ellipse(xPos, yPos, xSize+10, ySize+10);
+                    fill(c);
                     ellipse(xPos, yPos, xSize, ySize);
+
                     zoomXPos = cos(radians(theta))*150;
                     zoomYPos = sin(radians(theta))*150;
                     fill(255, 0, 0);
                     pushMatrix();
+
                     translate(-Camera0.position.x+width/2, -Camera0.position.y+height/2);
+                    //scale(scaler);
                     rotate(radians(theta));
-                    image(head_image, 150, 0, 100, 100);
+                    image(head_image, 150, 0, 100, 100); // if you want to scale it by .25, multiply the xPos.
+                    //if(scaler >= .25) 
+                    //	scaler -= .05;
                     popMatrix();
-                    theta += 1;
+                    theta += .5;
                     if (transpar < 255) {
                         transpar+= 7.5;
                     }
@@ -176,6 +188,7 @@ class Star {
                             stopper = true;
                             full = false;
                             isEaten = true;
+                            scaler = 1;
                             if (!isBlackHole) {
                                 eaten++;
                             } else {
@@ -195,10 +208,20 @@ class Star {
                             ySize = 50;
                             stopper = true;
                             full = false;
+                            scaler = 1;
                         }
                     }
                 }
             } else {
+
+
+                fill(c, random(20, 30));
+                ellipse(xPos, yPos, xSize+45/4, ySize+45/4);
+                fill(c, random(60, 70));
+                ellipse(xPos, yPos, xSize+25/4, ySize+25/4);
+                fill(c, random(90, 100));
+                ellipse(xPos, yPos, xSize+2.5, ySize+2.5);
+                fill(c);
                 ellipse(xPos, yPos, xSize, ySize);
             }
             if (mouseX > transX+xPos-30 && mouseX < transX+ xPos+30 && mouseY < transY+ yPos+ 30 && mouseY > transY+yPos -30) {
