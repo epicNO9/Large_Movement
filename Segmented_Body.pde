@@ -3,8 +3,8 @@ Segment Seg1;
 Segment Seg2;
 Segment Tail;
 class Segment {
-    PVector position;
-    PVector velocity;
+    PVector position = new PVector(-Camera0.position.x + width/2, -Camera0.position.y + height/2);
+    PVector velocity = new PVector(0,0);
     int i = 0, j = 0, q = 0, x = 0;
     float [] blahX = new float [6];
     float [] blahY = new float [6];
