@@ -3,11 +3,11 @@ void hunger() { //Could use optimization. Good for now.
     rectMode(CENTER);
     noFill();
     stroke(255);
-    rect(-transX + width/2, -transY + 25, 600, 25);
+    rect(-Camera0.position.x + width/2, -Camera0.position.y + 25, 600, 25);
     rectMode(CORNER);
     noStroke();
     fill(red, green, blue);
-    rect(-transX + width/2-299, -transY + 13, health, 24);
+    rect(-Camera0.position.x + width/2-299, -Camera0.position.y + 13, health, 24);
     rectMode(CENTER);
     health -= eaten;
     if (health < 0) {
